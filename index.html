@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/master.css">
+    <title>Shopping list</title>
+    <link rel="icon" type="image/png" href="icon.png" />
+</head>
+
+<body id="gradient">
+    <div class="container main-container">
+        <div class="blur"></div>
+        <div class="main">
+            <div class="row title-header">
+                <div class="col-lg-12">
+                    <div class="container text-center">
+                        <i class="fa fa-shopping-basket title-icon" aria-hidden="true"></i>
+                        <h1 class="display-3">
+                            Shopping list</h1>
+                        <p class="lead text-center">/ˈʃɒpɪŋ/ - the activity of buying things from shops</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-buttons">
+                <div class="container">
+                    <div class="col-lg-12">
+                        <button type="button" class="btn btn-outline-info pull-right btn-panel" data-toggle="modal" data-target="#categoriesModal">
+                            <i class="fa fa-refresh" aria-hidden="true"></i> Sort
+                        </button>
+                        <button type="button" class="btn btn-outline-primary pull-right btn-panel" data-toggle="modal" data-target="#productModal">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="col-lg-12 text-center">
+                        <table class="table table-striped borderless table-hover">
+                            <thead id="head-table">
+                                <tr class="main-tr">
+                                    <th scope="col" class="table-checkbox text-center">
+                                        <button class="btn btn-outline-primary btn-sm selectall" onclick="toggleSelectAllProduct();">
+                                            <i id="all-icon-checkbox" class="fa fa-square-o" aria-hidden="true"></i>
+                                        </button>
+                                    </th>
+                                    <th scope="col" class="short-col">Category</th>
+                                    <th scope="col" class="short-col">Quantity</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col" class="third-col text-center">
+                                        <button type="button" class="btn btn-outline-danger" id="btnDeleteAll" onclick="btnDeleteSelected()">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pull-left footer-name">
+                        <div>
+                            <em>Emiliano Montesdeoca del Puerto</em>
+                        </div>
+                    </div>
+                    <div class="pull-right gradient-checkbox">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" id="gradientCheckbox" checked class="form-check-input gradient-checkbox-margin" onclick="toggleGradient(this)"> Toggle gradient background
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add/Edit product -->
+    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title modal-title-center" id="exampleModalLabel">Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <p class="text-modal">Use this form in order to create a new product to your shopping list or to edit an already existing product.
+                    </p>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-3 col-xs-4">
+                                <div class="form-group">
+                                    <label class="col-form-label" for="add_id">Id</label>
+                                    <input type="text" class="form-control" id="add_id" readonly placeholder="X">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9 col-sm-9 col-xs-8">
+                                <div class="form-group">
+                                    <label class="col-form-label" for="add_quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="add_quantity" min="0" placeholder="4">
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-form-label" for="add_name">Product name</label>
+                            <input type="text" class="form-control" id="add_name" required placeholder="Water">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="add_category">Category</label>
+                            <select id="add_category" class="form-control">
+                                <option class="bg-light">None</option>
+                                <option class="bg-info">Low</option>
+                                <option class="bg-warning">Medium</option>
+                                <option class="bg-danger">High</option>
+                                <option class="bg-dark">Critical</option>
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createOrEditProduct()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Categories -->
+    <div class="modal fade" id="categoriesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="blur"></div>
+
+                <div class="modal-header text-center">
+                    <h5 class="modal-title modal-title-center" id="exampleModalLabel">Categories</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <p class="text-modal">There are five categories which represent different relevance for the product. Each category has
+                            a defined color.
+                        </p>
+                        <p class="badges-modal">These are all categories, from highest to lowest relevance:
+                            <br>
+                            <div class="text-center">
+                                <span class="badge badge-dark">Critical</span>
+                                <span class="badge badge-danger">High</span>
+                                <span class="badge badge-warning">Medium</span>
+                                <span class="badge badge-info">Low</span>
+                                <span class="badge badge-light" style="color: black !important">None</span>
+                            </div>
+
+                        </p>
+                        <p class="text-modal text-modal-option">If you want to order the list, please select how do you want to order it:</p>
+
+                        <div class="form-group">
+                            <select id="select_sorting" class="form-control">
+                                <option>Alphabetical name</option>
+                                <option>Reverse alphabetical name</option>
+                                <option>Highest to lowest quantity</option>
+                                <option>Lowest to highest quantity</option>
+                                <option>Highest to lowest relevance</option>
+                                <option>Lowest to highest relevance</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="setSorting()" data-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="js/gradient.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
